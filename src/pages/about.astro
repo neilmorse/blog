@@ -1,0 +1,6 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config';
+import { href } from '../lib/posts';
+---
+<BaseLayout title="关于我"><section class="page-intro"><div class="eyebrow">THE PERSON BEHIND THE NOTES</div><h1>你好，我是 Neil。</h1><p>一个开发者，一名长期学习者，一座数字花园的园丁。</p></section><article class="prose narrow about-prose"><h2>欢迎来到我的数字花园</h2><p>我想留一个属于自己的角落，记录写代码时的探索、解决问题的过程，以及生活里偶然冒出来的想法。这里不追求每篇文章都面面俱到，更希望诚实地记录学习的轨迹。</p><h2>这里会写些什么</h2><ul><li><strong>开发实践</strong>：把想法做出来，也把踩过的坑记下来。</li><li><strong>技术笔记</strong>：从一个问题出发，试着理解背后的原理。</li><li><strong>日常思考</strong>：关于学习、写作，以及让生活更简单的小事。</li></ul><h2>为什么是数字花园</h2><p>文章不是写完就结束的成品。一个暂时不成熟的想法，也可以先种下，随着新的理解再慢慢修改。比起漂亮的结论，我更珍惜持续生长的过程。</p><blockquote>保持好奇，认真动手，然后把学到的东西分享出来。</blockquote><h2>保持联系</h2><p>你可以在 <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a> 找到我，或通过 <a href={href('rss.xml')}>RSS 订阅</a>这里的新文章。感谢你来花园里坐坐。</p></article></BaseLayout>

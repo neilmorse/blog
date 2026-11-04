@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPosts, formatDate, postHref } from '../lib/posts';
+import Icon from '../components/Icon.astro';
+const posts = await getPosts();
+const years = [...new Set(posts.map(post => post.data.date.getUTCFullYear()))];
+---
+<BaseLayout title="文章归档"><section class="page-intro"><div class="eyebrow">THE ARCHIVE</div><h1>文字的年轮。</h1><p>每一次记录，都是生长的痕迹。这里收录了 {posts.length} 篇文章。</p></section><div class="archive-list narrow">{years.map(year => <section class="archive-year"><h2>{year}<span>{posts.filter(p => p.data.date.getUTCFullYear() === year).length} 篇</span></h2>{posts.filter(post => post.data.date.getUTCFullYear() === year).map(post => <a class="archive-row" href={postHref(post)}><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date).slice(5)}</time><h3>{post.data.title}</h3><Icon name="arrow" size={18}/></a>)}</section>)}</div></BaseLayout>

@@ -1,0 +1,63 @@
+---
+import Icon from './Icon.astro';
+import { href } from '../lib/posts';
+---
+<dialog id="search-dialog" aria-labelledby="search-title" data-index={href('search.json')}>
+  <div class="search-head"><h2 id="search-title">在花园里找一找</h2><button class="icon-button" id="search-close" aria-label="关闭搜索"><Icon name="close" /></button></div>
+  <label class="search-field"><Icon name="search"/><input id="search-input" type="search" placeholder="搜索文章、内容或标签…" autocomplete="off" /></label>
+  <p id="search-status" class="muted" role="status">输入关键词，发现一篇文章。</p>
+  <ul id="search-results" class="search-results"></ul>
+  <p class="search-help">按 <kbd>Esc</kbd> 关闭 · 搜索在本地完成</p>
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#search-dialog')!;
+  const input = document.querySelector<HTMLInputElement>('#search-input')!;
+  const status = document.querySelector<HTMLElement>('#search-status')!;
+  const results = document.querySelector<HTMLUListElement>('#search-results')!;
+  type Entry = { title: string; description: string; tags: string[]; url: string; body: string };
+  let entries: Entry[] | undefined;
+  let loading: Promise<void> | undefined;
+  function renderResults() {
+    results.replaceChildren();
+    if (!entries) return;
+    const query = input.value.trim().toLocaleLowerCase();
+    if (!query) { status.textContent = '输入关键词，发现一篇文章。'; return; }
+    const matches = entries.filter(p => `${p.title} ${p.description} ${p.tags.join(' ')} ${p.body}`.toLocaleLowerCase().includes(query));
+    status.textContent = matches.length ? `找到 ${matches.length} 篇文章` : '还没有找到，换个关键词试试。';
+    for (const post of matches) {
+      const li = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = post.url;
+      const title = document.createElement('strong'); title.textContent = post.title;
+      const desc = document.createElement('span'); desc.textContent = post.description;
+      link.append(title, desc); li.append(link); results.append(li);
+    }
+  }
+  async function openSearch() {
+    if (!dialog.open) dialog.showModal();
+    input.focus();
+    if (!entries && !loading) {
+      status.textContent = '正在载入文章…';
+      loading = (async () => {
+        try {
+          const response = await fetch(dialog.dataset.index!);
+          if (!response.ok) throw new Error('Search unavailable');
+          entries = await response.json();
+        } catch { status.textContent = '搜索暂时无法载入，请稍后重试。'; }
+        finally { loading = undefined; }
+      })();
+    }
+    await loading;
+    renderResults();
+  }
+  document.querySelector('#search-open')?.addEventListener('click', openSearch);
+  document.querySelector('#search-close')?.addEventListener('click', () => dialog.close());
+  input.addEventListener('input', renderResults);
+  dialog.addEventListener('click', e => { if (e.target === dialog) { const r = dialog.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close(); } });
+  document.addEventListener('keydown', e => {
+    const target = e.target as HTMLElement;
+    if ((e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) && !target.isContentEditable)) {
+      e.preventDefault(); openSearch();
+    }
+  });
+</script>

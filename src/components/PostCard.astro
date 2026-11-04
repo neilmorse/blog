@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, postHref, readingTime, tagHref } from '../lib/posts';
+import Icon from './Icon.astro';
+interface Props { post: CollectionEntry<'posts'>; }
+const { post } = Astro.props;
+---
+<article class="post-card">
+  <div class="post-meta"><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time><span>·</span><span>{readingTime(post.body)} 分钟阅读</span></div>
+  <a class="post-title" href={postHref(post)}><h3>{post.data.title}</h3><Icon name="arrow" size={20}/></a>
+  <p>{post.data.description}</p>
+  <div class="post-tags">{post.data.tags.map(tag => <a href={tagHref(tag)}># {tag}</a>)}</div>
+</article>
