@@ -1,8 +1,0 @@
----
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPosts, tagHref } from '../../lib/posts';
-import Icon from '../../components/Icon.astro';
-const posts = await getPosts();
-const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
----
-<BaseLayout title="话题标签"><section class="page-intro"><div class="eyebrow">EXPLORE BY TOPIC</div><h1>好奇，各有枝叶。</h1><p>沿着一个话题，发现更多值得探索的想法。</p></section><div class="tag-grid">{tags.map(tag => <a class="tag-tile" href={tagHref(tag)}><span class="tag-hash">#</span><h2>{tag}</h2><span>{posts.filter(p => p.data.tags.includes(tag)).length} 篇文章</span><Icon name="arrow" size={19}/></a>)}</div></BaseLayout>

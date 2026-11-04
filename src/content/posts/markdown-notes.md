@@ -1,7 +1,8 @@
 ---
 title: "我的 Markdown 写作小工作流"
 description: "让内容回到内容本身：用纯文本组织标题、代码与思考，给写作减少一点阻力。"
-date: 2026-11-01
+published: 2026-11-01
+category: "写作与思考"
 tags: ["工具", "写作"]
 ---
 

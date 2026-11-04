@@ -1,7 +1,8 @@
 ---
 title: "把页面拆小：认识 Astro 的组件化思路"
 description: "从一张文章卡片出发，理解组件、Props 和插槽，让博客页面更容易维护。"
-date: 2026-11-03
+published: 2026-11-03
+category: "技术笔记"
 tags: ["Astro", "前端"]
 ---
 
