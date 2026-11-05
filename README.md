@@ -68,7 +68,7 @@ lang: ""
 | `src/config.ts` | 名称、简介、语言、主题色、横幅、头像、导航和社交链接 |
 | `src/content/spec/about.md` | 关于页正文 |
 | `src/content/posts/` | 文章 |
-| `public/images/neil-avatar.svg` | 当前 N 字母头像，可替换为自己的图片 |
+| `public/images/github-avatar.jpg` | 从 GitHub 获取的当前头像，可替换为自己的图片 |
 | `astro.config.mjs` | 域名、部署路径和 Astro 插件 |
 
 当前为简体中文，使用 Fuwari 默认蓝色主题，横幅默认关闭。需要横幅时在 `src/config.ts` 中启用 `banner.enable` 并设置图片。页脚保留 Astro / Fuwari 致谢。

@@ -53,7 +53,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "/images/neil-avatar.svg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar: "/images/github-avatar.jpg", // Current GitHub avatar, stored locally for reliable loading.
 	name: "Neil",
 	bio: "一个保持好奇的开发者，记录技术探索、开发实践与日常思考。",
 	links: [
